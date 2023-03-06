@@ -1,16 +1,20 @@
+using GamesStore.Models;
 var builder = WebApplication.CreateBuilder(args);
- 
-builder.Services.AddMvc(); // добавляем сервисы MVC
- 
+
+var services = builder.Services;
+services.AddMvc(); // добавляем сервисы MVC
+services.AddTransient<IProductRepository, FakeProductRepository>();
+
 var app = builder.Build();
 app.UseDeveloperExceptionPage();
 app.UseStatusCodePages();
 //app.UseStaticFiles();
 //app.UseMvc();
+
 // устанавливаем сопоставление маршрутов с контроллерами
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"
+    pattern: "{controller=Product}/{action=List}/{id?}"
 );
  
 app.Run();
